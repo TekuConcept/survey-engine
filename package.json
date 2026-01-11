@@ -1,26 +1,26 @@
 {
-  "name": "survey-engine",
-  "version": "1.0.0",
-  "private": true,
-  "description": "A survey platform with React frontend and NestJS backend",
-  "workspaces": [
-    "apps/*"
-  ],
-  "scripts": {
-    "dev": "npm run dev --workspaces",
-    "dev:web": "npm run dev --workspace=apps/web",
-    "dev:api": "npm run dev --workspace=apps/api",
-    "build": "npm run build --workspaces",
-    "build:web": "npm run build --workspace=apps/web",
-    "build:api": "npm run build --workspace=apps/api",
-    "start:api": "npm run start --workspace=apps/api"
-  },
-  "keywords": [
-    "survey",
-    "forms",
-    "typescript",
-    "monorepo"
-  ],
-  "author": "",
-  "license": "ISC"
+    "name": "survey-engine",
+    "version": "1.0.0",
+    "private": true,
+    "description": "A survey platform with React frontend and NestJS backend",
+    "workspaces": [
+        "apps/*"
+    ],
+    "scripts": {
+        "dev": "npm run dev --workspaces",
+        "dev:web": "npm run dev --workspace=apps/web",
+        "dev:api": "npm run dev --workspace=apps/api",
+        "build": "npm run build --workspaces",
+        "build:web": "npm run build --workspace=apps/web",
+        "build:api": "npm run build --workspace=apps/api",
+        "start:api": "npm run start --workspace=apps/api"
+    },
+    "keywords": [
+        "survey",
+        "forms",
+        "typescript",
+        "monorepo"
+    ],
+    "author": "",
+    "license": "ISC"
 }
