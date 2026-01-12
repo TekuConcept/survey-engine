@@ -14,6 +14,17 @@ export interface DatabaseConfig {
     authSource?: string
 }
 
+export interface RedisConfig {
+    /** URL to the Redis server */
+    host: string
+    /** Socket port number */
+    port: number
+    /** Authorized username for connections */
+    user?: string
+    /** Password for connections */
+    pass?: string
+}
+
 export interface VaultConfig {
     rootToken: string
     baseURL: string
@@ -27,6 +38,8 @@ export interface GlobalConfig {
     port: number
     /** Database connection info */
     database: DatabaseConfig
+    /** Redis connection */
+    redis: RedisConfig
     /** Secrets vault configuration */
     vault?: VaultConfig
     /** Miscellaneous configuration values */

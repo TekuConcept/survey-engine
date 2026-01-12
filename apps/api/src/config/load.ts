@@ -20,6 +20,12 @@ export function loadConfig(): GlobalConfig {
             pass: process.env.DB_PASSWORD || undefined,
             name: process.env.DB_DATABASE || 'survey-engine',
         },
+        redis: {
+            host: process.env.REDIS_HOST || 'localhost',
+            port: parseInt(process.env.REDIS_PORT, 10) || 6379,
+            user: process.env.REDIS_USER || undefined,
+            pass: process.env.REDIS_PASS || undefined,
+        },
         vault: {
             rootToken: process.env.VAULT_TOKEN
                 || process.env.VAULT_ROOT_TOKEN,

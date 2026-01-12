@@ -7,7 +7,7 @@ import { MySQLConfigService } from '@data/db/mysql.service'
 import { AppController } from './app.controller'
 import { AppResolver } from './app.resolver'
 import { AppService } from './app.service'
-import { Database } from './common'
+import { Database, RedisModule } from './common'
 import { loadConfig, getConfig } from './config'
 
 @Module({
@@ -27,6 +27,8 @@ import { loadConfig, getConfig } from './config'
             useClass: MySQLConfigService,
             inject: [ConfigService],
         }),
+
+        RedisModule,
     ],
     controllers: [AppController],
     providers: [AppService, AppResolver],
