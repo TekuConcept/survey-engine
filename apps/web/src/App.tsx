@@ -1,10 +1,6 @@
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import styled from 'styled-components'
-
-const client = new ApolloClient({
-    uri: 'http://localhost:4000/graphql',
-    cache: new InMemoryCache(),
-})
+import { ApolloProvider } from '@apollo/client/react'
+import { Gql } from './client'
 
 const Container = styled.div`
     display: flex;
@@ -29,7 +25,7 @@ const Subtitle = styled.p`
 
 function App() {
     return (
-        <ApolloProvider client={client}>
+        <ApolloProvider client={Gql.client}>
             <Container>
                 <Title>Survey Engine</Title>
                 <Subtitle>Welcome to Survey Engine - Web App</Subtitle>

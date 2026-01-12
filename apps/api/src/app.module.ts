@@ -2,28 +2,33 @@ import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { MySQLConfigService } from '@data/db/mysql.service'
 import { AppController } from './app.controller'
+import { AppResolver } from './app.resolver'
 import { AppService } from './app.service'
+import { Database } from './common'
+import { loadConfig, getConfig } from './config'
 
 @Module({
     imports: [
+        ConfigModule.forRoot({ isGlobal: true, load: [loadConfig] }),
+
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
-            autoSchemaFile: true,
-            playground: true,
+            autoSchemaFile: true, // join(process.cwd(), 'src/schema.gql')
+            sortSchema: true,
+            playground: getConfig().env !== 'production',
         }),
-        TypeOrmModule.forRoot({
-            type: 'mysql',
-            host: process.env.DB_HOST || 'localhost',
-            port: parseInt(process.env.DB_PORT || '3306'),
-            username: process.env.DB_USERNAME || 'root',
-            password: process.env.DB_PASSWORD || '',
-            database: process.env.DB_DATABASE || 'survey_engine',
-            entities: [],
-            synchronize: process.env.NODE_ENV !== 'production',
+
+        TypeOrmModule.forRootAsync({
+            name: Database.DATA_TABLES,
+            imports: [ConfigModule],
+            useClass: MySQLConfigService,
+            inject: [ConfigService],
         }),
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [AppService, AppResolver],
 })
 export class AppModule {}
