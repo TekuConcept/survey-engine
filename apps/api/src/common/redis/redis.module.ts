@@ -18,7 +18,10 @@ async function initRedisClient(
         auth = `${user}:${pass}@`
     }
 
-    const url = `redis://${auth}${r.host}:${r.port}`
+    let index = ''
+    if (r.index && r.index > 0) index = `/${r.index}`
+
+    const url = `redis://${auth}${r.host}:${r.port}${index}`
     const client: RedisClientType = createClient({
         url,
         socket: {

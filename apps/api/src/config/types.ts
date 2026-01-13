@@ -23,11 +23,15 @@ export interface RedisConfig {
     user?: string
     /** Password for connections */
     pass?: string
+    /** Database index to use, defaults to 0 */
+    index?: number
 }
 
 export interface VaultConfig {
-    rootToken: string
+    token: string
     baseURL: string
+    mount?: string
+    prefix?: string
 }
 
 export interface ExtrasConfig {}
@@ -41,7 +45,7 @@ export interface GlobalConfig {
     /** Redis connection */
     redis: RedisConfig
     /** Secrets vault configuration */
-    vault?: VaultConfig
+    vault: VaultConfig
     /** Miscellaneous configuration values */
     extras?: ExtrasConfig
 }
