@@ -3,12 +3,14 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { MySQLConfigService } from '@data/db/mysql.service'
+import { MySQLConfigService } from '@/core/db/mysql.service'
 import { AppController } from './app.controller'
 import { AppResolver } from './app.resolver'
 import { AppService } from './app.service'
-import { Database, RedisModule, VaultModule } from './common'
-import { loadConfig, getConfig } from './config'
+import { Database } from './common'
+import { loadConfig, getConfig } from './core/config'
+import { CoreModule } from './core/core.module'
+import { FeatureModule } from './modules/feature.module'
 
 @Module({
     imports: [
@@ -28,8 +30,8 @@ import { loadConfig, getConfig } from './config'
             inject: [ConfigService],
         }),
 
-        VaultModule,
-        RedisModule,
+        CoreModule,
+        FeatureModule,
     ],
     controllers: [AppController],
     providers: [AppService, AppResolver],

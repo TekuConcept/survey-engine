@@ -4,8 +4,9 @@ import session from 'express-session'
 import { RedisStore } from 'connect-redis'
 import { RedisClientType } from 'redis'
 import { NestExpressApplication } from '@nestjs/platform-express'
-import { REDIS_CLIENT, VaultService } from './common'
 import { Logger } from '@nestjs/common'
+import { REDIS_CLIENT } from './core/redis'
+import { VaultService } from './core/vault'
 
 export interface SessionState {
     created: number // timestamp ms

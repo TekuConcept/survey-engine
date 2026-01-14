@@ -3,7 +3,7 @@ import https from 'https'
 import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { VaultKvOptions, VaultKv2ReadResponse } from './types'
-import { VaultConfig } from '@/config'
+import { VaultConfig } from '@/core/config'
 
 type JsonObject = Record<string, any>
 

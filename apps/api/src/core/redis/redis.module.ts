@@ -1,7 +1,7 @@
 import { createClient, RedisClientType } from 'redis'
 import { Global, Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { RedisConfig } from '@/config'
+import { RedisConfig } from '@/core/config'
 import { RedisService } from './redis.service'
 import { REDIS_CLIENT } from './types'
 

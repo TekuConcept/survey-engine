@@ -1,15 +1,25 @@
 import * as _ from 'lodash'
-import { Injectable } from '@nestjs/common'
+import * as path from 'path'
+import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import {
     TypeOrmModuleOptions,
     TypeOrmOptionsFactory,
 } from '@nestjs/typeorm'
 import { Database } from '@/common'
-import { getConfig } from '@/config'
-import { DatabaseConfig } from '@/config/types'
+import { getConfig } from '@/core/config'
+import { DatabaseConfig } from '@/core/config/types'
 import { DatabaseFileLogger } from './filelogger'
 import { DatabaseTables } from './tables'
+import { loadAllSchemasSync } from './schema-loader'
+
+/**
+ * This should ideally be more reliable than NestJS's
+ * DI initialization. distPath calculation:
+ * /dist/core/db -> /dist
+ */
+const distRoot = path.resolve(__dirname, '..', '..')
+loadAllSchemasSync(distRoot)
 
 @Injectable()
 export class MySQLConfigService implements TypeOrmOptionsFactory {
@@ -19,6 +29,12 @@ export class MySQLConfigService implements TypeOrmOptionsFactory {
         const database = this.configService.get<DatabaseConfig>('database')
         const isDev = getConfig().env !== 'production'
         const enableLogging = isDev && false // set to true to debug issues
+
+        const entities = DatabaseTables.getTables()
+        Logger.verbose(
+            `Loaded ${entities.length} database entities for MySQL`,
+            MySQLConfigService.name,
+        )
 
         return {
             name: Database.DATA_TABLES, // required for proper shutdown

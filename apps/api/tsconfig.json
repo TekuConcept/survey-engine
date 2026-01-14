@@ -14,7 +14,10 @@
         "baseUrl": "./",
         "paths": {
             "@/*": ["./src/*"],
-            "@data/*": ["./src/data/*"],
+            "@core/*": ["./src/core/*"],
+            "@modules/*": ["./src/modules/*"],
+            "@tables/*": ["./src/modules/tables/*"],
+            "@common/*": ["./src/common/*"]
         },
 
         "incremental": true,
