@@ -56,7 +56,7 @@ export class UsersService {
     async findExisting(
         username: string,
         email: string,
-        select?: (keyof User)[]
+        select: (keyof User)[] | '*' = '*'
     ): Promise<User | null> {
         const query = this.usersRepo
             .createQueryBuilder('user')
@@ -65,9 +65,11 @@ export class UsersService {
                 email: this.normalizeEmail(email),
             })
 
-        const uniqueFields = Array.from(new Set([...(select ?? [])]))
-        if (select && uniqueFields.length > 0) {
-            query.select(select.map(field => `user.${field}`))
+        if (select !== '*') {
+            const uniqueFields = Array.from(new Set([...(select ?? [])]))
+            if (select && uniqueFields.length > 0) {
+                query.select(select.map(field => `user.${field}`))
+            }
         }
 
         const result = await query.getOne()
@@ -76,20 +78,21 @@ export class UsersService {
 
     async findExistingWithPassword(
         identifier: string,
-        select?: (keyof User)[]
+        select: (keyof User)[] | '*' = '*'
     ): Promise<User | null> {
         const query = this.usersRepo
             .createQueryBuilder('user')
             .where('user.username = :identifier', { identifier })
             .orWhere('user.email = :identifier', { identifier })
 
-        const uniqueFields = Array.from(
-            new Set([...(select ?? []), 'password'])
-        )
-        query.select(uniqueFields.map(field => `user.${field}`))
+        if (select !== '*') {
+            const uniqueFields = Array.from(
+                new Set([...(select ?? []), 'password'])
+            )
+            query.select(uniqueFields.map(field => `user.${field}`))
+        }
 
-        const result = await query.getOne()
-        return this.sanitize(result)
+        return await query.getOne()
     }
 
     async createUser(dto: UserDto): Promise<User> {

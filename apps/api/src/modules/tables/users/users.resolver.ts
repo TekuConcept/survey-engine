@@ -1,5 +1,4 @@
 import { Context, Query, Resolver } from '@nestjs/graphql'
-import { UnauthorizedException } from '@nestjs/common'
 
 import { HttpContext } from '@/common'
 import { UsersService } from './users.service'
@@ -9,20 +8,12 @@ import { User } from './users.schema'
 export class UsersResolver {
     constructor(private readonly usersService: UsersService) {}
 
-    @Query(() => User)
-    async me(@Context() ctx: HttpContext): Promise<User> {
-        const unauthroized = new UnauthorizedException('Not authenticated')
-
-        if (!ctx.req?.isAuthenticated || !ctx.req.isAuthenticated()) {
-            throw unauthroized
-        }
-
+    @Query(() => User, { nullable: true })
+    async me(@Context() ctx: HttpContext): Promise<User | null> {
         const userId = (ctx.req?.user as User)?.id
-        if (!userId) throw unauthroized
+        if (!userId) return null
 
-        const user = await this.usersService.findById(userId)
-        if (!user) throw unauthroized
-
-        return user
+        // NOTE: Sanitized within findById
+        return await this.usersService.findById(userId)
     }
 }

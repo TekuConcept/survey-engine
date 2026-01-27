@@ -38,3 +38,7 @@ lerna-debug.log*
 # Build outputs
 dist
 build
+
+# Extra sandboxing files
+/sandbox
+/old

@@ -27,7 +27,7 @@ export interface IUserSchema {
 
     status: UserStatus
 
-    verified_at: Date
+    verified_at: Date | null
     created_at: Date
     updated_at: Date
 }
@@ -65,8 +65,8 @@ export class User implements IUserSchema {
     @Field(_type => UserStatus)
     status: UserStatus
 
-    @Field(() => Date)
-    verified_at: Date
+    @Field(() => Date, { nullable: true })
+    verified_at: Date | null
 
     @Field(() => Date)
     created_at: Date

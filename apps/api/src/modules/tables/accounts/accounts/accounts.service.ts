@@ -42,8 +42,12 @@ export class AccountsService {
     async findAccountsForUser(userId: number): Promise<Account[]> {
         const results = await this.accountRepo
             .createQueryBuilder('account')
-            .innerJoin('account.accountUsers', 'accountUser')
-            .where('accountUser.user_id = :userId', { userId })
+            .innerJoin(
+                'AccountUser',
+                'au',
+                'au.account_id = account.id AND au.user_id = :userId',
+                { userId },
+            )
             .getMany()
         return results
     }
