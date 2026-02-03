@@ -15,7 +15,7 @@ export function IconHome({ color, ...props }: IconProps) {
             <path
                 id='path319-0'
                 style={{
-                    fill: color || '#ffffff',
+                    fill: color || undefined,
                     fillOpacity: 1,
                     strokeWidth: 0.0430306
                 }}

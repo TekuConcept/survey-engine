@@ -15,7 +15,7 @@ export function IconDots({ color = 'white', ...props }: IconProps) {
             <path id='circle46-3'
                 style={{
                     display: 'inline',
-                    fill: color || '#ffffff',
+                    fill: color || undefined,
                     fillOpacity: 1,
                     strokeWidth: 0.137911,
                     strokeLinecap: 'square'
